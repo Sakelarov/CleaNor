@@ -5,12 +5,14 @@ using UnityEngine;
 public class StainController : MonoBehaviour
 {
     private SpriteRenderer rend;
+    private PlayerController player;
     public float alpha = 1;
 
     private IEnumerator cleaning;
     void Start()
     {
         rend = GetComponent<SpriteRenderer>();
+        player = GameObject.Find("Player").GetComponent<PlayerController>();
     }
 
     
@@ -24,7 +26,7 @@ public class StainController : MonoBehaviour
         while (alpha > 0)
         {
             yield return new WaitForSeconds(0.2f);
-            alpha -= 0.1f;
+            alpha -= player.cleaningSpeed * 0.1f;
             rend.color = new Color(rend.color.r, rend.color.g, rend.color.b, alpha);
 
             if (alpha < 0)

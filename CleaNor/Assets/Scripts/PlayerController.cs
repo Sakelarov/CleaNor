@@ -4,10 +4,13 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    public float speed= 10;
+    public float speed= 5;
+    public float cleaningSpeed = 1;
 
     private float horizontalInput;
     private float verticalInput;
+
+    private GameObject trap;
 
     void Start()
     {
@@ -29,31 +32,52 @@ public class PlayerController : MonoBehaviour
         transform.Translate(Vector2.up * verticalInput * Time.deltaTime * speed);
     }
 
-    private void OnTriggerStay2D(Collider2D other)
+    private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("garbage"))
+        switch (other.tag)
         {
-            if (other.gameObject.transform.localScale.x < 0.6f)
-            {
+            case "garbage":
+                if (other.gameObject.transform.localScale.x < 0.6f)
+                {
+                    Destroy(other.gameObject);
+                }
+                break;
+            case "shoes": StartCoroutine("IncreaseSpeed");
                 Destroy(other.gameObject);
-            }
-        }
-
-        if (other.CompareTag("shoes"))
-        {
-            StartCoroutine("IncreaseSpeed");
+                break;
+            case "bucket": StartCoroutine("IncreaseCleaningSpeed");
+                Destroy(other.gameObject);
+                break;
+            case "trap": StartCoroutine("Trap");
+                trap = other.gameObject;
+                break;
         }
     }
 
     private IEnumerator IncreaseSpeed()
     {
-        speed = 20;
+        speed = 8;
         yield return new WaitForSeconds(7);
-        speed = 17;
+        speed = 7;
         yield return new WaitForSeconds(1);
-        speed = 14;
+        speed = 6;
         yield return new WaitForSeconds(1);
-        speed = 10;
+        speed = 5;
+    }
+
+    private IEnumerator Trap()
+    {
+        speed = 0;
+        yield return new WaitForSeconds(4);
+        speed = 5;
+        Destroy(trap);
+    }
+
+    private IEnumerator IncreaseCleaningSpeed()
+    {
+        cleaningSpeed = 2;
+        yield return new WaitForSeconds(8);
+        cleaningSpeed = 1;
     }
 
 }
