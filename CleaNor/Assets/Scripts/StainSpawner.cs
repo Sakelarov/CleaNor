@@ -5,11 +5,15 @@ using UnityEngine;
 public class StainSpawner : MonoBehaviour
 {
     [SerializeField] private GameObject[] stains;
+    [SerializeField] private GameObject shoes;
+    [SerializeField] private GameObject trap;
 
     [SerializeField] private RectTransform spawnArea;
     void Start()
     {
         StartCoroutine("SpawnStains");
+        StartCoroutine("SpawnShoes");
+        StartCoroutine("SpawnTraps");
     }
 
     private IEnumerator SpawnStains()
@@ -19,11 +23,7 @@ public class StainSpawner : MonoBehaviour
             float seconds = Random.Range(5, 7);
             yield return new WaitForSeconds(seconds);
             int randomStain = Random.Range(0, stains.Length);
-            var stain = Instantiate(stains[randomStain], this.transform);
-
-            var x = Random.Range(spawnArea.position.x - spawnArea.rect.width / 2, spawnArea.position.x + spawnArea.rect.width / 2);
-            var y = Random.Range(spawnArea.position.y - spawnArea.rect.height / 2, spawnArea.position.y + spawnArea.rect.height / 2);
-            stain.transform.position = new Vector2(x, y);
+            Instantiate(stains[randomStain], this.transform).transform.position = GetPosition();
         }
     }
 
@@ -36,6 +36,31 @@ public class StainSpawner : MonoBehaviour
         stainController.alpha = 0;
 
         return stainController;
+    }
+
+    private IEnumerator SpawnShoes()
+    {
+        yield return new WaitForSeconds(8);
+        var shoesBuff = Instantiate(shoes);
+        shoesBuff.transform.position = GetPosition();
+        yield return new WaitUntil(() => shoesBuff == null);
+        yield return SpawnShoes();
+    }
+
+    private IEnumerator SpawnTraps()
+    {
+        yield return new WaitForSeconds(8);
+        var t = Instantiate(trap);
+        t.transform.position = GetPosition();
+        yield return new WaitUntil(() => t == null);
+        yield return SpawnTraps();
+    }
+
+    private Vector2 GetPosition()
+    {
+        var x = Random.Range(spawnArea.position.x - spawnArea.rect.width / 2, spawnArea.position.x + spawnArea.rect.width / 2);
+        var y = Random.Range(spawnArea.position.y - spawnArea.rect.height / 2, spawnArea.position.y + spawnArea.rect.height / 2);
+        return new Vector2(x, y);
     }
 }
 

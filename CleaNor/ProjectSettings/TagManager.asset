@@ -9,6 +9,10 @@ TagManager:
   - cleaner
   - bullet
   - garbage
+  - obstacle
+  - shoes
+  - bucket
+  - trap
   layers:
   - Default
   - TransparentFX

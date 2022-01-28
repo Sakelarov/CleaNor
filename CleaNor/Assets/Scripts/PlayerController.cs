@@ -46,7 +46,7 @@ public class PlayerController : MonoBehaviour
                 Destroy(other.gameObject);
                 break;
             case "bucket": StartCoroutine("IncreaseCleaningSpeed");
-                Destroy(other.gameObject);
+                other.gameObject.GetComponent<BucketController>().ResetBucket();
                 break;
             case "trap": StartCoroutine("Trap");
                 trap = other.gameObject;
