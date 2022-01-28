@@ -12,9 +12,11 @@ public class PlayerController : MonoBehaviour
 
     private GameObject trap;
 
+    private StainSpawner spawner;
+
     void Start()
     {
-        
+        spawner = GameObject.Find("StainsSpawner").GetComponent<StainSpawner>();
     }
 
     
@@ -37,7 +39,7 @@ public class PlayerController : MonoBehaviour
         switch (other.tag)
         {
             case "garbage":
-                if (other.gameObject.transform.localScale.x < 0.6f)
+                if (other.gameObject.transform.localScale.x < 0.65f)
                 {
                     Destroy(other.gameObject);
                 }
@@ -71,6 +73,7 @@ public class PlayerController : MonoBehaviour
         yield return new WaitForSeconds(4);
         speed = 5;
         Destroy(trap);
+        spawner.SpawnTrap();
     }
 
     private IEnumerator IncreaseCleaningSpeed()

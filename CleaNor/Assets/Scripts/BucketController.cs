@@ -7,13 +7,17 @@ using UnityEngine.UI;
 public class BucketController : MonoBehaviour
 {
     private SpriteRenderer sprite;
+    private CircleCollider2D coll;
+
     [SerializeField] private Image loader;
+
     private float loadspeed = 0.1f;
     private Color faded = new Color(1, 1, 1, 0.6f);
 
     void Start()
     {
         sprite = GetComponent<SpriteRenderer>();
+        coll = GetComponent<CircleCollider2D>();
     }
 
     public void Update()
@@ -25,6 +29,7 @@ public class BucketController : MonoBehaviour
             {
                 loader.gameObject.SetActive(false);
                 sprite.color = Color.white;
+                coll.isTrigger = true;
             }
         }
     }
@@ -34,5 +39,6 @@ public class BucketController : MonoBehaviour
         loader.fillAmount = 0;
         loader.gameObject.SetActive(true);
         sprite.color = faded;
+        coll.isTrigger = false;
     }
 }

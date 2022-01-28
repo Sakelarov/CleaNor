@@ -9,6 +9,8 @@ public class StainSpawner : MonoBehaviour
     [SerializeField] private GameObject trap;
 
     [SerializeField] private RectTransform spawnArea;
+
+    private List<GameObject> currentTraps = new List<GameObject>();
     void Start()
     {
         StartCoroutine("SpawnStains");
@@ -52,8 +54,16 @@ public class StainSpawner : MonoBehaviour
         yield return new WaitForSeconds(8);
         var t = Instantiate(trap);
         t.transform.position = GetPosition();
-        yield return new WaitUntil(() => t == null);
-        yield return SpawnTraps();
+        currentTraps.Add(t);
+        if (currentTraps.Count < 5)
+        {
+            yield return SpawnTraps();
+        }
+    }
+
+    public void SpawnTrap()
+    {
+        StartCoroutine("SpawnTraps");
     }
 
     private Vector2 GetPosition()
