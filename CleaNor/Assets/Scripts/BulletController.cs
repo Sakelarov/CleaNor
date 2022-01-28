@@ -5,25 +5,13 @@ using UnityEngine;
 
 public class BulletController : MonoBehaviour
 {
-    private int rotation;
+    private Vector3 direction;
     private float speed = 6;
-    private bool isDirectionSet = false;
     private bool isSet = false;
 
     void Update()
     {
-        if(isSet)Shoot();
-    }
-
-
-    private void Shoot()
-    {
-        if (!isDirectionSet)
-        {
-            transform.Rotate(new Vector3(0, 0, rotation));
-            isDirectionSet = true;
-        }
-        transform.Translate(Vector2.up * speed * Time.deltaTime);
+        if(isSet) transform.Translate(direction * speed * Time.deltaTime);
     }
 
     public void SetupBullet(int bullet, Vector3 position)
@@ -31,19 +19,15 @@ public class BulletController : MonoBehaviour
         transform.position = position;
         switch (bullet)
         {
-            case 1:rotation = -45;
+            case 1: direction = new Vector3(1, 0.5f);
                 break;
-            case 2:rotation = -90;
+            case 2: direction = new Vector3(1, -0.5f);
                 break;
-            case 3:rotation = 45;
+            case 3: direction = new Vector3(0, -1f);
                 break;
-            case 4:rotation = 90;
+            case 4: direction = new Vector3(-1, -0.5f);
                 break;
-            case 5:rotation = 135;
-                break;
-            case 6:rotation = 180;
-                break;
-            case 7:rotation = 225;
+            case 5: direction = new Vector3(-1, 0.5f);
                 break;
         }
         isSet = true;

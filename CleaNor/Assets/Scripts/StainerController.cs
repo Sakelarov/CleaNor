@@ -9,9 +9,10 @@ public class StainerController : MonoBehaviour
     [SerializeField] private GameObject bulletPrefab;
     [SerializeField] private Image bulletLoader;
     [SerializeField] private float loadSpeed;
+    [SerializeField] private GameObject garbage;
+    private bool isGarbageThrown = false;
 
     private float fillAmount = 0;
-
 
     private StainSpawner stainSpawner;
 
@@ -29,6 +30,7 @@ public class StainerController : MonoBehaviour
     {
         MakeStains();
         ShootBullets();
+        ThrowGarbage();
     }
 
     private void MakeStains()
@@ -69,10 +71,20 @@ public class StainerController : MonoBehaviour
         if (fillAmount >= 1)
         {
             fillAmount = 0;
-            for (int i = 1; i < 8; i++)
+            isGarbageThrown = false;
+            for (int i = 1; i < 6; i++)
             {
                 Instantiate(bulletPrefab).GetComponent<BulletController>().SetupBullet(i, transform.position);
             }
+        }
+    }
+
+    private void ThrowGarbage()
+    {
+        if (!isGarbageThrown && fillAmount >= 0.5f)
+        {
+            Instantiate(garbage).transform.position = this.transform.position;
+            isGarbageThrown = true;
         }
     }
 }
