@@ -8,6 +8,9 @@ public class StainController : MonoBehaviour
     private PlayerController player;
     public float alpha = 1;
 
+
+    public int point = 1;
+
     private IEnumerator cleaning;
     void Start()
     {
@@ -31,6 +34,7 @@ public class StainController : MonoBehaviour
 
             if (alpha < 0)
             {
+                GameObject.Find("UIManagerGO").GetComponent<UIManager>().score += point;
                 Destroy(this.gameObject);
             }
         }
