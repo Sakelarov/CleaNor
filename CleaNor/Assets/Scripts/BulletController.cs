@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class BulletController : MonoBehaviour
 {
-    [SerializeField] private GameObject stainPrefab;
     private int rotation;
     private float speed = 6;
     private bool isDirectionSet = false;
@@ -14,17 +13,6 @@ public class BulletController : MonoBehaviour
     void Update()
     {
         if(isSet)Shoot();
-    }
-
-    void OnTriggerEnter2D(Collider2D other)
-    {
-        if (other.gameObject.CompareTag("vase"))
-        {
-            var stain = Instantiate(stainPrefab);
-            stain.transform.position = other.transform.position;
-            Destroy(other.gameObject);
-        }
-        Destroy(this.gameObject);
     }
 
 
