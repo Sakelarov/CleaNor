@@ -7,6 +7,8 @@ public class GarbageController : MonoBehaviour
 {
     private RectTransform spawnArea;
     [SerializeField] private GameObject stain;
+    [SerializeField] private GameObject landingSpot;
+    private GameObject landingObj;
 
     private Vector2 landingArea;
     private Vector2 startingPosition;
@@ -24,6 +26,10 @@ public class GarbageController : MonoBehaviour
         ChooseLandingArea();
     }
 
+    private void OnDestroy()
+    {
+        Destroy(landingObj);
+    }
 
     void Update()
     {
@@ -36,6 +42,8 @@ public class GarbageController : MonoBehaviour
         var x = Random.Range(spawnArea.position.x - spawnArea.rect.width / 2, spawnArea.position.x + spawnArea.rect.width / 2);
         var y = Random.Range(spawnArea.position.y - spawnArea.rect.height / 2, spawnArea.position.y + spawnArea.rect.height / 2);
         landingArea = new Vector2(x, y);
+        landingObj = Instantiate(landingSpot);
+        landingObj.transform.position = landingArea;
 
         distance = Vector2.Distance(transform.position, landingArea);
         startingPosition = transform.position;

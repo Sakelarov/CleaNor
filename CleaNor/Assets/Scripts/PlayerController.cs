@@ -38,6 +38,22 @@ public class PlayerController : MonoBehaviour
                 Destroy(other.gameObject);
             }
         }
+
+        if (other.CompareTag("shoes"))
+        {
+            StartCoroutine("IncreaseSpeed");
+        }
+    }
+
+    private IEnumerator IncreaseSpeed()
+    {
+        speed = 20;
+        yield return new WaitForSeconds(7);
+        speed = 17;
+        yield return new WaitForSeconds(1);
+        speed = 14;
+        yield return new WaitForSeconds(1);
+        speed = 10;
     }
 
 }
