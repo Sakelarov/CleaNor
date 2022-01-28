@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class BucketController : MonoBehaviour
 {
     private SpriteRenderer sprite;
-    private CircleCollider2D coll;
+    private BoxCollider2D coll;
 
     [SerializeField] private Image loader;
 
@@ -17,7 +17,7 @@ public class BucketController : MonoBehaviour
     void Start()
     {
         sprite = GetComponent<SpriteRenderer>();
-        coll = GetComponent<CircleCollider2D>();
+        coll = GetComponent<BoxCollider2D>();
     }
 
     public void Update()

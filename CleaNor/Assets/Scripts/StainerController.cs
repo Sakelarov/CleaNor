@@ -5,6 +5,10 @@ using UnityEngine.UI;
 
 public class StainerController : MonoBehaviour
 {
+    [HideInInspector] public enum State { idle, garbage };
+    [HideInInspector] public State state = State.idle;
+    private Animator anim;
+
     //[SerializeField] private GameObject bulletsHolder;
     [SerializeField] private GameObject bulletPrefab;
     [SerializeField] private Image bulletLoader;
@@ -23,6 +27,7 @@ public class StainerController : MonoBehaviour
 
     void Start()
     {
+        anim = GetComponent<Animator>();
         stainSpawner = GameObject.Find("StainsSpawner").GetComponent<StainSpawner>();
     }
 
@@ -31,6 +36,8 @@ public class StainerController : MonoBehaviour
         MakeStains();
         ShootBullets();
         ThrowGarbage();
+
+        anim.SetInteger("state", (int)state);
     }
 
     private void MakeStains()
@@ -83,8 +90,14 @@ public class StainerController : MonoBehaviour
     {
         if (!isGarbageThrown && fillAmount >= 0.5f)
         {
-            Instantiate(garbage).transform.position = this.transform.position;
-            isGarbageThrown = true;
+            state = State.garbage;
         }
+    }
+
+    public void Garbage()
+    {
+        Instantiate(garbage).transform.position = this.transform.position;
+        isGarbageThrown = true;
+        state = State.idle;
     }
 }

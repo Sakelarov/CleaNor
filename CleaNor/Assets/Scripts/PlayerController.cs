@@ -13,16 +13,24 @@ public class PlayerController : MonoBehaviour
     private GameObject trap;
 
     private StainSpawner spawner;
+    private Transform camera;
 
     void Start()
     {
         spawner = GameObject.Find("StainsSpawner").GetComponent<StainSpawner>();
+        camera = Camera.main.transform;
     }
 
     
     void Update()
     {
         Move();
+
+        if (Input.GetKeyDown(KeyCode.H))
+        {
+            Debug.Log("Level completed!");
+            StartCoroutine("ProceedToNextLevel");
+        }
     }
 
     private void Move()
@@ -83,4 +91,12 @@ public class PlayerController : MonoBehaviour
         cleaningSpeed = 1;
     }
 
+    private IEnumerator ProceedToNextLevel()
+    {
+        for (int i = 0; i < 19; i++)
+        {
+            yield return new WaitForSeconds(0.1f);
+            camera.position = new Vector3(0, camera.position.y + 0.5f, -10);
+        }
+    }
 }
