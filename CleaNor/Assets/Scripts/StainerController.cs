@@ -16,7 +16,7 @@ public class StainerController : MonoBehaviour
 
     private StainSpawner stainSpawner;
 
-    private float timeBeforeCreatingStain = 1;
+    private float timeBeforeCreatingStain = 1.5f;
     private Vector3 stainPosition;
     private bool isOnSamePosition = false;
     private StainController currentStain;

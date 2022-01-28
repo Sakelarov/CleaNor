@@ -6,6 +6,7 @@ using UnityEngine;
 public class GarbageController : MonoBehaviour
 {
     private RectTransform spawnArea;
+    [SerializeField] private GameObject stain;
 
     private Vector2 landingArea;
     private Vector2 startingPosition;
@@ -13,11 +14,13 @@ public class GarbageController : MonoBehaviour
     private float distance;
     private float distanceFlown;
 
-    private float speed = 5f;
+    private float speed = 3f;
     private bool isLandingAreaChosen = false;
+    private LayerMask layer;
     void Start()
     {
         spawnArea = GameObject.Find("SpawnArea").GetComponent<RectTransform>();
+        layer = LayerMask.NameToLayer("Garbage");
         ChooseLandingArea();
     }
 
@@ -50,6 +53,10 @@ public class GarbageController : MonoBehaviour
 
     private void Splash()
     {
-        //Physics.CheckSphere(landingArea, 0.1f,) //add layermask
+        if (transform.localScale.x < 0.49f)
+        {
+            Instantiate(stain).transform.position = landingArea;
+            Destroy(this.gameObject);
+        }
     }
 }

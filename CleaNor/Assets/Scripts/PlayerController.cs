@@ -29,4 +29,15 @@ public class PlayerController : MonoBehaviour
         transform.Translate(Vector2.up * verticalInput * Time.deltaTime * speed);
     }
 
+    private void OnTriggerStay2D(Collider2D other)
+    {
+        if (other.CompareTag("garbage"))
+        {
+            if (other.gameObject.transform.localScale.x < 0.6f)
+            {
+                Destroy(other.gameObject);
+            }
+        }
+    }
+
 }

@@ -66,6 +66,10 @@ public class StainController : MonoBehaviour
     public void GetDirty(float value)
     {
         alpha += value;
+        if (alpha > 1)
+        {
+            alpha = 1;
+        }
         if (alpha <= 1)
         {
             rend.color = new Color(rend.color.r, rend.color.g, rend.color.b, alpha);
