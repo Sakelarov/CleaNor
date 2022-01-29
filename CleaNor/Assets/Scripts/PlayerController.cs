@@ -49,6 +49,7 @@ public class PlayerController : MonoBehaviour
             case "garbage":
                 if (other.gameObject.transform.localScale.x < 0.65f)
                 {
+                    GameObject.Find("UIManagerGO").GetComponent<UIManager>().score += 3;
                     Destroy(other.gameObject);
                 }
                 break;

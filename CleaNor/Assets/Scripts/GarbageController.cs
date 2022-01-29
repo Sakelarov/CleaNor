@@ -63,6 +63,10 @@ public class GarbageController : MonoBehaviour
     {
         if (transform.localScale.x < 0.49f)
         {
+            if (GameObject.Find("UIManagerGO").GetComponent<UIManager>().score >= 2)
+            {
+                GameObject.Find("UIManagerGO").GetComponent<UIManager>().score -= 2;
+            }
             Instantiate(stain).transform.position = landingArea;
             Destroy(this.gameObject);
         }

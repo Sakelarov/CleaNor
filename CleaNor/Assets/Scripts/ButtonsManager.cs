@@ -23,13 +23,11 @@ public class ButtonsManager : MonoBehaviour
         {
             PlayerPrefs.SetInt("SoundOff", 1);
             soundOff = PlayerPrefs.GetInt("SoundOff");
-            soundButton.GetComponent<Button>().image.color = Color.red;
         }
         else if (soundOff == 1)
         {
             PlayerPrefs.SetInt("SoundOff", 0);
             soundOff = PlayerPrefs.GetInt("SoundOff");
-            soundButton.GetComponent<Button>().image.color = Color.green;
         }
     }
 
@@ -41,15 +39,6 @@ public class ButtonsManager : MonoBehaviour
         playButton.onClick.AddListener(PlayGame);
         soundButton.onClick.AddListener(SoundOff);
         soundOff = PlayerPrefs.GetInt("SoundOff");
-
-        if (soundOff == 1)
-        {
-            soundButton.GetComponent<Button>().image.color = Color.red;
-        }
-        else if (soundOff == 0)
-        {
-            soundButton.GetComponent<Button>().image.color = Color.green;
-        }
     }
 
     

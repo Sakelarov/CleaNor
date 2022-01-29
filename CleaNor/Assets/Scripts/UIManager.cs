@@ -29,7 +29,6 @@ public class UIManager : MonoBehaviour
         {
             isPaused = true;
             Time.timeScale = 0;
-            pauseButton.image.color = Color.yellow;
             pauseButton.GetComponentInChildren<Text>().text = "II";
             pauseSound.Play();
 
@@ -42,7 +41,6 @@ public class UIManager : MonoBehaviour
         {
             isPaused = false;
             Time.timeScale = 1;
-            pauseButton.image.color = Color.green;
             pauseButton.GetComponentInChildren<Text>().text = "Pause";
             pauseSound.Play();
 
@@ -61,11 +59,14 @@ public class UIManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        playMusic = GameObject.Find("MusicGO").GetComponent<AudioSource>();
+        if (GameObject.Find("MusicGO"))
+        {
+            playMusic = GameObject.Find("MusicGO").GetComponent<AudioSource>();
+        }
         pauseButton = GameObject.Find("PauseButton").GetComponent<Button>();
         mainMenuButton = GameObject.Find("MainMenuButton").GetComponent<Button>();
         pauseSound = GameObject.Find("PauseSoundGO").GetComponent<AudioSource>();
-        pauseButton.image.color = Color.green;
+
         pauseButton.onClick.AddListener(Pause);
         mainMenuButton.onClick.AddListener(MainMenu);
         pointsText.text = "Score: 0";

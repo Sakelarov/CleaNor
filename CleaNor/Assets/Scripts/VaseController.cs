@@ -7,6 +7,9 @@ public class VaseController : MonoBehaviour
     [SerializeField] private GameObject stainPrefab;
     private Animator anim;
 
+
+    public int point = 5;
+
     private void Start()
     {
         anim = GetComponent<Animator>();
@@ -22,6 +25,10 @@ public class VaseController : MonoBehaviour
     {
         if (other.gameObject.CompareTag("bullet"))
         {
+            if (GameObject.Find("UIManagerGO").GetComponent<UIManager>().score >= 5)
+            {
+                GameObject.Find("UIManagerGO").GetComponent<UIManager>().score -= point;
+            }
             DestroyVase();
             var stain = Instantiate(stainPrefab);
             stain.transform.position = transform.position;
