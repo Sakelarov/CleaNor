@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class StainerController : MonoBehaviour
 {
-    [HideInInspector] public enum State { idle, garbage };
+    [HideInInspector] public enum State { idle, garbage, shoot };
     [HideInInspector] public State state = State.idle;
     private Animator anim;
 
@@ -33,7 +33,7 @@ public class StainerController : MonoBehaviour
 
     void Update()
     {
-        //MakeStains();
+        MakeStains();
         ShootBullets();
         ThrowGarbage();
 
@@ -79,10 +79,7 @@ public class StainerController : MonoBehaviour
         {
             fillAmount = 0;
             isGarbageThrown = false;
-            for (int i = 1; i < 6; i++)
-            {
-                Instantiate(bulletPrefab).GetComponent<BulletController>().SetupBullet(i, transform.position);
-            }
+            state = State.shoot;
         }
     }
 
@@ -98,6 +95,16 @@ public class StainerController : MonoBehaviour
     {
         Instantiate(garbage).transform.position = this.transform.position;
         isGarbageThrown = true;
+        state = State.idle;
+    }
+
+    public void Shoot() // called from animation state shoot
+    {
+        for (int i = 1; i < 6; i++)
+        {
+            Instantiate(bulletPrefab).GetComponent<BulletController>().SetupBullet(i, transform.position);
+        }
+
         state = State.idle;
     }
 }

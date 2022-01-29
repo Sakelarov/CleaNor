@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class StainSpawner : MonoBehaviour
@@ -29,7 +30,8 @@ public class StainSpawner : MonoBehaviour
 
     [SerializeField] private GameObject topBorder;
     [SerializeField] private GameObject bottomBorder;
-    [SerializeField] private GameObject spawnarea2;
+    [SerializeField] private RectTransform spawnarea2;
+    [SerializeField] private RectTransform spawnarea3;
     [SerializeField] private GameObject arrow;
     [SerializeField] private GameObject levelChangeTrigger;
 
@@ -47,17 +49,22 @@ public class StainSpawner : MonoBehaviour
     private IEnumerator spawnTraps;
     private int level = 1;
 
-    private List<GameObject> currentTraps = new List<GameObject>();
+    [HideInInspector] public List<GameObject> currentTraps = new List<GameObject>();
+    [HideInInspector] public GameObject currentShoes;
+
+    private PlayerController playerController;
     
     void Start()
     {
-        spawnStains = SpawnStains();
-        spawnShoes = SpawnShoes();
-        spawnTraps = SpawnTraps();
+        playerController = GameObject.FindObjectOfType<PlayerController>();
 
-        StartCoroutine(spawnStains);
-        StartCoroutine(spawnShoes);
-        StartCoroutine(spawnTraps);
+        //spawnStains = SpawnStains();
+        //spawnShoes = SpawnShoes();
+        //spawnTraps = SpawnTraps();
+
+        StartCoroutine("SpawnStains");
+        StartCoroutine("SpawnShoes");
+        StartCoroutine("SpawnTraps");
     }
 
     public void Update()
@@ -105,9 +112,9 @@ public class StainSpawner : MonoBehaviour
     private IEnumerator SpawnShoes()
     {
         yield return new WaitForSeconds(8);
-        var shoesBuff = Instantiate(shoes);
-        shoesBuff.transform.position = GetPosition();
-        yield return new WaitUntil(() => shoesBuff == null);
+        currentShoes = Instantiate(shoes);
+        currentShoes.transform.position = GetPosition();
+        yield return new WaitUntil(() => currentShoes == null);
         yield return SpawnShoes();
     }
 
@@ -147,24 +154,28 @@ public class StainSpawner : MonoBehaviour
 
     private void CalculateProgress()
     {
-        float progress = 0;
-        foreach (var stain in stainCollection)
+        if (isGameRunning)
         {
-            progress += stain.color.a;
-        }
+            float progress = 0;
+            foreach (var stain in stainCollection)
+            {
+                progress += stain.color.a;
+            }
 
-        progressBar.value = progress;
-        float value = progress * 100 / 20;
-        progressValue.text = $"{value:f1}%";
+            progressBar.value = progress;
+            float value = progress * 100 / 20;
+            progressValue.text = $"{value:f1}%";
 
-        if (progress <= 0.1f)
-        {
-            CompleteLevel();
+            if (progress <= 0.1f)
+            {
+                CompleteLevel();
+            }
+            else if (progress >= 20)
+            {
+                GameOver();
+            }
         }
-        else if (progress >= 20)
-        {
-            // you are fired
-        }
+        
     }
 
     private void CompleteLevel()
@@ -186,9 +197,12 @@ public class StainSpawner : MonoBehaviour
                 Destroy(stain.gameObject);
                 stainCollection.Remove(stain.GetComponent<SpriteRenderer>());
             }
-            StopCoroutine(spawnStains);
-            StopCoroutine(spawnShoes);
-            StopCoroutine(spawnTraps);
+            //StopCoroutine(spawnStains);
+            //StopCoroutine(spawnShoes);
+            //StopCoroutine(spawnTraps);
+            StopCoroutine("SpawnStains");
+            StopCoroutine("SpawnShoes");
+            StopCoroutine("SpawnTraps");
 
             isCompleted = true;
         }
@@ -199,19 +213,34 @@ public class StainSpawner : MonoBehaviour
         topBorder.SetActive(true);
         levelCompletedText.SetActive(false);
         arrow.SetActive(false);
-        isGameRunning = true;
         level++;
 
         if (level == 2)
         {
             bottomBorder.transform.position = new Vector3(bottomBorder.transform.position.x,
                 bottomBorder.transform.position.y - 2, bottomBorder.transform.position.z);
-            spawnArea.transform.position = spawnarea2.transform.position;
+            spawnArea = spawnarea2;
+        }
+        else if (level == 5)
+        {
+            topBorder.transform.position = new Vector3(topBorder.transform.position.x,
+                topBorder.transform.position.y + 2, topBorder.transform.position.z);
+            spawnArea = spawnarea3;
+        }
+        else if (level == 6)
+        {
+            SceneManager.LoadScene("MainMenu");
         }
 
-        StartCoroutine(spawnStains);
-        StartCoroutine(spawnShoes);
-        StartCoroutine(spawnTraps);
+        //StartCoroutine(spawnStains);
+        //StartCoroutine(spawnShoes);
+        //StartCoroutine(spawnTraps);
+        StartCoroutine("SpawnStains");
+        StartCoroutine("SpawnShoes");
+        StartCoroutine("SpawnTraps");
+
+        isGameRunning = true;
+        isCompleted = false;
     }
 
     public void HideText() // called from animation of levelCompletedText
@@ -225,6 +254,12 @@ public class StainSpawner : MonoBehaviour
     {
         gameoverText.SetActive(true);
         isGameRunning = false;
+        Invoke("PauseMenu", 2);
+    }
+
+    private void PauseMenu()
+    {
+        playerController.pauseMenu.SetActive(true);
     }
 }
 

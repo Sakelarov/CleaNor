@@ -13,6 +13,7 @@ public class BucketController : MonoBehaviour
 
     private float loadspeed = 0.1f;
     private Color faded = new Color(1, 1, 1, 0.6f);
+    private Color blue = new Color(0.7f, 0.9f, 1, 1);
 
     void Start()
     {
@@ -28,6 +29,7 @@ public class BucketController : MonoBehaviour
             if (loader.fillAmount >= 1)
             {
                 loader.gameObject.SetActive(false);
+                StartCoroutine("ColorChange");
                 sprite.color = Color.white;
                 coll.isTrigger = true;
             }
@@ -40,5 +42,17 @@ public class BucketController : MonoBehaviour
         loader.gameObject.SetActive(true);
         sprite.color = faded;
         coll.isTrigger = false;
+    }
+
+    private IEnumerator ColorChange()
+    {
+        yield return new WaitForSeconds(0.2f);
+        sprite.color = blue;
+        yield return new WaitForSeconds(0.2f);
+        sprite.color = Color.white;
+        if (coll.isTrigger)
+        {
+            yield return ColorChange();
+        }
     }
 }

@@ -22,7 +22,7 @@ public class PlayerController : MonoBehaviour
     [HideInInspector] public State state = State.idle;
     private Animator anim;
 
-    [SerializeField] private GameObject pauseMenu;
+    public GameObject pauseMenu;
 
 
     void Start()
@@ -131,6 +131,7 @@ public class PlayerController : MonoBehaviour
         }
         rend.color = Color.white;
         speed = 5;
+        StainSpawner.Instance.currentTraps.Remove(trap);
         Destroy(trap);
         spawner.SpawnTrap();
     }
