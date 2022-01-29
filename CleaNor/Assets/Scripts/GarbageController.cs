@@ -68,6 +68,9 @@ public class GarbageController : MonoBehaviour
                 GameObject.Find("UIManagerGO").GetComponent<UIManager>().score -= 2;
             }
             Instantiate(stain).transform.position = landingArea;
+            var stainObj = Instantiate(stain);
+            stainObj.transform.position = landingArea;
+            StainSpawner.Instance.AddStainToCollection(stainObj);
             Destroy(this.gameObject);
         }
     }

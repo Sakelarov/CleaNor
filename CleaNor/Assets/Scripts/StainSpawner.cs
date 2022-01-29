@@ -4,6 +4,24 @@ using UnityEngine;
 
 public class StainSpawner : MonoBehaviour
 {
+    private static StainSpawner instance;
+
+    public static StainSpawner Instance
+    {
+        get
+        {
+            if (instance == null)
+            {
+                var inst = FindObjectOfType<StainSpawner>();
+                instance = inst;
+            }
+
+            return instance;
+        }
+    }
+
+    private List<SpriteRenderer> stainCollection = new List<SpriteRenderer>();
+
     [SerializeField] private GameObject[] stains;
     [SerializeField] private GameObject shoes;
     [SerializeField] private GameObject trap;
@@ -11,6 +29,7 @@ public class StainSpawner : MonoBehaviour
     [SerializeField] private RectTransform spawnArea;
 
     private List<GameObject> currentTraps = new List<GameObject>();
+    
     void Start()
     {
         StartCoroutine("SpawnStains");
@@ -25,7 +44,9 @@ public class StainSpawner : MonoBehaviour
             float seconds = Random.Range(5, 7);
             yield return new WaitForSeconds(seconds);
             int randomStain = Random.Range(0, stains.Length);
-            Instantiate(stains[randomStain], this.transform).transform.position = GetPosition();
+            var stain = Instantiate(stains[randomStain], this.transform);
+            stain.transform.position = GetPosition();
+            stainCollection.Add(stain.GetComponent<SpriteRenderer>());
         }
     }
 
@@ -34,6 +55,9 @@ public class StainSpawner : MonoBehaviour
         int randomStain = Random.Range(0, stains.Length);
         var stain = Instantiate(stains[randomStain], this.transform);
         stain.transform.position = position;
+
+        stainCollection.Add(stain.GetComponent<SpriteRenderer>());
+
         var stainController = stain.GetComponent<StainController>();
         stainController.alpha = 0;
 
@@ -71,6 +95,11 @@ public class StainSpawner : MonoBehaviour
         var x = Random.Range(spawnArea.position.x - spawnArea.rect.width / 2, spawnArea.position.x + spawnArea.rect.width / 2);
         var y = Random.Range(spawnArea.position.y - spawnArea.rect.height / 2, spawnArea.position.y + spawnArea.rect.height / 2);
         return new Vector2(x, y);
+    }
+
+    public void AddStainToCollection(GameObject stain)
+    {
+        stainCollection.Add(stain.GetComponent<SpriteRenderer>());
     }
 }
 

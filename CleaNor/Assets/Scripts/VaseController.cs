@@ -32,6 +32,7 @@ public class VaseController : MonoBehaviour
             DestroyVase();
             var stain = Instantiate(stainPrefab);
             stain.transform.position = transform.position;
+            StainSpawner.Instance.AddStainToCollection(stain);
             Destroy(other.gameObject);
         }
     }
