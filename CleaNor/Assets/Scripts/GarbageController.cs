@@ -19,10 +19,15 @@ public class GarbageController : MonoBehaviour
     private float speed = 3f;
     private bool isLandingAreaChosen = false;
     private LayerMask layer;
+
+    private CircleCollider2D coll;
     void Start()
     {
         spawnArea = GameObject.Find("SpawnArea").GetComponent<RectTransform>();
         layer = LayerMask.NameToLayer("Garbage");
+        coll = GetComponent<CircleCollider2D>();
+        coll.enabled = false;
+
         ChooseLandingArea();
     }
 
@@ -55,8 +60,15 @@ public class GarbageController : MonoBehaviour
         transform.position = Vector3.MoveTowards(transform.position, landingArea, Time.deltaTime * speed);
         distanceFlown = Vector2.Distance(transform.position, startingPosition);
 
-        if (distanceFlown < distance / 2) transform.localScale = new Vector3(transform.localScale.x + Time.deltaTime, transform.localScale.y + Time.deltaTime, 1);
-        else transform.localScale = new Vector3(transform.localScale.x - Time.deltaTime, transform.localScale.y - Time.deltaTime, 1);
+        if (distanceFlown < distance / 2)
+        {
+            transform.localScale = new Vector3(transform.localScale.x + Time.deltaTime, transform.localScale.y + Time.deltaTime, 1);
+        }
+        else
+        {
+            transform.localScale = new Vector3(transform.localScale.x - Time.deltaTime, transform.localScale.y - Time.deltaTime, 1);
+            coll.enabled = true;
+        }
     }
 
     private void Splash()

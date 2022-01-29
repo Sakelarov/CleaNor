@@ -6,6 +6,22 @@ using UnityEngine;
 
 public class UIManager : MonoBehaviour
 {
+    private static UIManager instance;
+
+    public static UIManager Instance
+    {
+        get
+        {
+            if (instance == null)
+            {
+                var inst = FindObjectOfType<UIManager>();
+                instance = inst;
+            }
+
+            return instance;
+        }
+    }
+
     public Text pointsText;
     public Button pauseButton;
     public Button mainMenuButton;
@@ -29,25 +45,25 @@ public class UIManager : MonoBehaviour
         {
             isPaused = true;
             Time.timeScale = 0;
-            pauseButton.GetComponentInChildren<Text>().text = "II";
+            //pauseButton.GetComponentInChildren<Text>().text = "II";
             pauseSound.Play();
 
-            if (playMusic.isPlaying)
-            {
-                playMusic.mute = true;
-            }
+            //if (playMusic.isPlaying)
+            //{
+            //    playMusic.mute = true;
+            //}
         }
         else if (isPaused)
         {
             isPaused = false;
             Time.timeScale = 1;
-            pauseButton.GetComponentInChildren<Text>().text = "Pause";
+            //pauseButton.GetComponentInChildren<Text>().text = "Pause";
             pauseSound.Play();
 
-            if (playMusic.isPlaying)
-            {
-                playMusic.mute = false;
-            }
+            //if (playMusic.isPlaying)
+            //{
+            //    playMusic.mute = false;
+            //}
         }
     }
 
@@ -59,15 +75,16 @@ public class UIManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if (GameObject.Find("MusicGO"))
-        {
-            playMusic = GameObject.Find("MusicGO").GetComponent<AudioSource>();
-        }
-        pauseButton = GameObject.Find("PauseButton").GetComponent<Button>();
-        mainMenuButton = GameObject.Find("MainMenuButton").GetComponent<Button>();
+        //if (GameObject.Find("MusicGO"))
+        //{
+        //    playMusic = GameObject.Find("MusicGO").GetComponent<AudioSource>();
+        //}
+
+        //pauseButton = GameObject.Find("PauseButton").GetComponent<Button>();
+        //mainMenuButton = GameObject.Find("MainMenuButton").GetComponent<Button>();
         pauseSound = GameObject.Find("PauseSoundGO").GetComponent<AudioSource>();
 
-        pauseButton.onClick.AddListener(Pause);
+        //pauseButton.onClick.AddListener(Pause);
         mainMenuButton.onClick.AddListener(MainMenu);
         pointsText.text = "Score: 0";
         StartCoroutine(UpdatePoints());

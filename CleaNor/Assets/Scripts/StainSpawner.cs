@@ -28,6 +28,8 @@ public class StainSpawner : MonoBehaviour
     [SerializeField] private GameObject levelCompletedText;
 
     [SerializeField] private GameObject topBorder;
+    [SerializeField] private GameObject bottomBorder;
+    [SerializeField] private GameObject spawnarea2;
     [SerializeField] private GameObject arrow;
     [SerializeField] private GameObject levelChangeTrigger;
 
@@ -65,16 +67,16 @@ public class StainSpawner : MonoBehaviour
 
     private IEnumerator SpawnStains()
     {
-        for (int i = 0; i < level; i++)
+        for (int i = 0; i < level + 2; i++)
         {
             int randomStain = Random.Range(0, stains.Length);
             var stain = Instantiate(stains[randomStain], this.transform);
             stain.transform.position = GetPosition();
             stainCollection.Add(stain.GetComponent<SpriteRenderer>());
         }
-        for (int i = 0; i < 15 + level; i++)
+        for (int i = 0; i < 10 + level; i++)
         {
-            float seconds = Random.Range(5, 7);
+            float seconds = Random.Range(8, 13);
             yield return new WaitForSeconds(seconds);
             if (isGameRunning)
             {
@@ -115,7 +117,7 @@ public class StainSpawner : MonoBehaviour
         var t = Instantiate(trap);
         t.transform.position = GetPosition();
         currentTraps.Add(t);
-        if (currentTraps.Count < 5)
+        if (currentTraps.Count < 3)
         {
             yield return SpawnTraps();
         }
@@ -175,6 +177,19 @@ public class StainSpawner : MonoBehaviour
             arrow.SetActive(true);
             topBorder.SetActive(false);
             levelChangeTrigger.SetActive(true);
+            foreach (var garbageController in GameObject.FindObjectsOfType<GarbageController>())
+            {
+                Destroy(garbageController.gameObject);
+            }
+            foreach (var stain in GameObject.FindObjectsOfType<StainController>())
+            {
+                Destroy(stain.gameObject);
+                stainCollection.Remove(stain.GetComponent<SpriteRenderer>());
+            }
+            StopCoroutine(spawnStains);
+            StopCoroutine(spawnShoes);
+            StopCoroutine(spawnTraps);
+
             isCompleted = true;
         }
     }
@@ -185,10 +200,14 @@ public class StainSpawner : MonoBehaviour
         levelCompletedText.SetActive(false);
         arrow.SetActive(false);
         isGameRunning = true;
-        
-        StopCoroutine(spawnStains);
-        StopCoroutine(spawnShoes);
-        StopCoroutine(spawnTraps);
+        level++;
+
+        if (level == 2)
+        {
+            bottomBorder.transform.position = new Vector3(bottomBorder.transform.position.x,
+                bottomBorder.transform.position.y - 2, bottomBorder.transform.position.z);
+            spawnArea.transform.position = spawnarea2.transform.position;
+        }
 
         StartCoroutine(spawnStains);
         StartCoroutine(spawnShoes);

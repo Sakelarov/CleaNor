@@ -9,6 +9,7 @@ public class PlayerController : MonoBehaviour
 
     private float horizontalInput;
     private float verticalInput;
+    private bool canMove = true;
 
     private GameObject trap;
 
@@ -17,31 +18,53 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] private GameObject[] objectsToBeMoved;
 
+    [HideInInspector] public enum State { idle, walk };
+    [HideInInspector] public State state = State.idle;
+    private Animator anim;
+
+    [SerializeField] private GameObject pauseMenu;
+
     void Start()
     {
+        anim = GetComponent<Animator>();
         spawner = GameObject.Find("StainsSpawner").GetComponent<StainSpawner>();
         camera = Camera.main.transform;
+
+        pauseMenu.SetActive(false);
     }
 
     
     void Update()
     {
         Move();
+        anim.SetInteger("state", (int)state);
 
-        //if (Input.GetKeyDown(KeyCode.H))
-        //{
-        //    Debug.Log("Level completed!");
-        //    StartCoroutine("ProceedToNextLevel");
-        //}
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            UIManager.Instance.Pause();
+            pauseMenu.SetActive(!pauseMenu.activeSelf);
+        }
     }
 
     private void Move()
     {
-        horizontalInput = Input.GetAxis("Horizontal");
-        verticalInput = Input.GetAxis("Vertical");
+        if (canMove)
+        {
+            horizontalInput = Input.GetAxis("Horizontal");
+            verticalInput = Input.GetAxis("Vertical");
 
-        transform.Translate(Vector2.right * horizontalInput * Time.deltaTime * speed);
-        transform.Translate(Vector2.up * verticalInput * Time.deltaTime * speed);
+            transform.Translate(Vector2.right * horizontalInput * Time.deltaTime * speed);
+            transform.Translate(Vector2.up * verticalInput * Time.deltaTime * speed);
+
+            if (horizontalInput != 0 || verticalInput != 0)
+            {
+                state = State.walk;
+            }
+            else
+            {
+                state = State.idle;
+            }
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -49,7 +72,7 @@ public class PlayerController : MonoBehaviour
         switch (other.tag)
         {
             case "garbage":
-                if (other.gameObject.transform.localScale.x < 0.65f)
+                if (other.gameObject.transform.localScale.x < 0.8f)
                 {
                     GameObject.Find("UIManagerGO").GetComponent<UIManager>().score += 3;
                     Destroy(other.gameObject);
@@ -65,7 +88,7 @@ public class PlayerController : MonoBehaviour
                 trap = other.gameObject;
                 break;
             case "levelTrigger": StartCoroutine("ProceedToNextLevel");
-                Debug.Log("Triggerred");
+                canMove = false;
                 other.gameObject.SetActive(false);
                 break;
             
@@ -112,5 +135,6 @@ public class PlayerController : MonoBehaviour
         }
 
         StainSpawner.Instance.StartNextLevel();
+        canMove = true;
     }
 }

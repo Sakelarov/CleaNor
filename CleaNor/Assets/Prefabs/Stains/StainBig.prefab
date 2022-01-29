@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: -898572924697311401}
   m_Layer: 0
   m_Name: StainBig
-  m_TagString: Untagged
+  m_TagString: stain
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -135,3 +135,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   alpha: 1
+  point: 1

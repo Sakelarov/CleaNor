@@ -15,6 +15,7 @@ TagManager:
   - trap
   - Music
   - levelTrigger
+  - stain
   layers:
   - Default
   - TransparentFX

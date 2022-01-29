@@ -31,6 +31,10 @@ public class StainController : MonoBehaviour
             yield return new WaitForSeconds(0.2f);
             alpha -= player.cleaningSpeed * 0.1f;
             rend.color = new Color(rend.color.r, rend.color.g, rend.color.b, alpha);
+            player.transform.localScale = new Vector3(-player.transform.localScale.x, player.transform.localScale.y,
+                player.transform.localScale.z);
+            var back = player.transform.GetChild(0);
+            back.localScale = new Vector3(-back.localScale.x, back.localScale.y, back.localScale.z);
 
             if (alpha < 0)
             {
