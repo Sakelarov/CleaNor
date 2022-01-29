@@ -12,7 +12,7 @@ public class PlayerController : MonoBehaviour
     private bool canMove = true;
 
     private GameObject trap;
-
+    private SpriteRenderer rend;
     private StainSpawner spawner;
     private Transform camera;
 
@@ -24,11 +24,13 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] private GameObject pauseMenu;
 
+
     void Start()
     {
         anim = GetComponent<Animator>();
         spawner = GameObject.Find("StainsSpawner").GetComponent<StainSpawner>();
         camera = Camera.main.transform;
+        rend = GetComponent<SpriteRenderer>();
 
         pauseMenu.SetActive(false);
     }
@@ -95,6 +97,19 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    private void OnTriggerStay2D(Collider2D other)
+    {
+        if (other.CompareTag("garbage"))
+        {
+            if (other.gameObject.transform.localScale.x < 0.6f)
+            {
+                GameObject.Find("UIManagerGO").GetComponent<UIManager>().score += 3;
+                Destroy(other.gameObject);
+            }
+        }
+        
+    }
+
     private IEnumerator IncreaseSpeed()
     {
         speed = 8;
@@ -109,7 +124,12 @@ public class PlayerController : MonoBehaviour
     private IEnumerator Trap()
     {
         speed = 0;
-        yield return new WaitForSeconds(4);
+        for (int i = 0; i < 20; i++)
+        {
+            yield return new WaitForSeconds(0.2f);
+            rend.color = rend.color == Color.white ? new Color(1, 0.6f, 0.6f, 1) : Color.white;
+        }
+        rend.color = Color.white;
         speed = 5;
         Destroy(trap);
         spawner.SpawnTrap();
