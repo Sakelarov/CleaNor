@@ -14,6 +14,7 @@ TagManager:
   - bucket
   - trap
   - Music
+  - levelTrigger
   layers:
   - Default
   - TransparentFX

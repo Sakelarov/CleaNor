@@ -15,6 +15,8 @@ public class PlayerController : MonoBehaviour
     private StainSpawner spawner;
     private Transform camera;
 
+    [SerializeField] private GameObject[] objectsToBeMoved;
+
     void Start()
     {
         spawner = GameObject.Find("StainsSpawner").GetComponent<StainSpawner>();
@@ -26,11 +28,11 @@ public class PlayerController : MonoBehaviour
     {
         Move();
 
-        if (Input.GetKeyDown(KeyCode.H))
-        {
-            Debug.Log("Level completed!");
-            StartCoroutine("ProceedToNextLevel");
-        }
+        //if (Input.GetKeyDown(KeyCode.H))
+        //{
+        //    Debug.Log("Level completed!");
+        //    StartCoroutine("ProceedToNextLevel");
+        //}
     }
 
     private void Move()
@@ -62,6 +64,11 @@ public class PlayerController : MonoBehaviour
             case "trap": StartCoroutine("Trap");
                 trap = other.gameObject;
                 break;
+            case "levelTrigger": StartCoroutine("ProceedToNextLevel");
+                Debug.Log("Triggerred");
+                other.gameObject.SetActive(false);
+                break;
+            
         }
     }
 
@@ -98,6 +105,12 @@ public class PlayerController : MonoBehaviour
         {
             yield return new WaitForSeconds(0.1f);
             camera.position = new Vector3(0, camera.position.y + 0.5f, -10);
+            foreach (var o in objectsToBeMoved)
+            {
+                o.transform.position = new Vector3(o.transform.position.x, o.transform.position.y + 0.5f, o.transform.position.z);
+            }
         }
+
+        StainSpawner.Instance.StartNextLevel();
     }
 }

@@ -42,7 +42,7 @@ public class StainerController : MonoBehaviour
 
     private void MakeStains()
     {
-        if (Input.GetAxis("Horizontal") == 0 && Input.GetAxis("Vertical") == 0)
+        if (Input.GetAxis("Horizontal") == 0 && Input.GetAxis("Vertical") == 0 && StainSpawner.Instance.isGameRunning)
         {
             if (!isOnSamePosition)
             {
@@ -75,7 +75,7 @@ public class StainerController : MonoBehaviour
         fillAmount += Time.deltaTime * loadSpeed;
         bulletLoader.fillAmount = fillAmount;
 
-        if (fillAmount >= 1)
+        if (fillAmount >= 1 && StainSpawner.Instance.isGameRunning)
         {
             fillAmount = 0;
             isGarbageThrown = false;
@@ -88,13 +88,13 @@ public class StainerController : MonoBehaviour
 
     private void ThrowGarbage()
     {
-        if (!isGarbageThrown && fillAmount >= 0.5f)
+        if (!isGarbageThrown && fillAmount >= 0.5f && StainSpawner.Instance.isGameRunning)
         {
             state = State.garbage;
         }
     }
 
-    public void Garbage()
+    public void Garbage() // called from animation state garbage
     {
         Instantiate(garbage).transform.position = this.transform.position;
         isGarbageThrown = true;

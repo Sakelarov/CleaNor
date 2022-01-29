@@ -35,6 +35,7 @@ public class StainController : MonoBehaviour
             if (alpha < 0)
             {
                 GameObject.Find("UIManagerGO").GetComponent<UIManager>().score += point;
+                StainSpawner.Instance.RemoveStainFromCollection(rend);
                 Destroy(this.gameObject);
             }
         }
