@@ -6,7 +6,7 @@ public class MouseController : MonoBehaviour
 {
     private Animator anim;
     public GameObject trap;
-    private float speed = 3f;
+    private float speed = 5f;
     private bool canMove = true;
     void Start()
     {
