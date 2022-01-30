@@ -1264,7 +1264,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -197, y: -565}
+  m_AnchoredPosition: {x: -197, y: -495.8}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1574603335
@@ -1417,7 +1417,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 17.975311, y: -4.3194}
+  m_AnchoredPosition: {x: 17.975342, y: -4.319397}
   m_SizeDelta: {x: -304.5507, y: -205.01}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1636727434
@@ -1571,20 +1571,20 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Bat Gyorgi took part in scientific experiment that went horably wrong.
+  m_Text: 'Bat Gyorgi took part in scientific experiment that went horribly wrong.
     Unfortunately the scientists that did it couldn''t find the things they needed,
     but now Bat Gyorgi has a pair of hands with their own opinion on his back. With
     extreme luck and creative disguise now he was able to find a job as night shift
-    janitor, he is trying to keep his job, but his hands make nasty things behind
-    his back (literaly). Help him clean the room before the Dirt Meter on the top
-    is filled. You will have a couple of tools to acheave this.
+    janitor. He is trying to keep his job, but his hands make nasty things behind
+    his back (literally). Help him clean the room before the Dirt Meter on the top
+    is filled. You will have a couple of tools to achieve this.
 
 
     Shoes Power
     Up
 
     These handy dandy pair of boots give you speed like nothing before. Redbull
-    gives you wings, theese give you lightning speed.
+    gives you wings, these give you lightning speed.
 
 
     A Bucket With Water
@@ -1601,24 +1601,24 @@ MonoBehaviour:
     Mouse Trap
 
     Make sure that you don''t step on some
-    of them. Placed in random places to catch mices they also incacipate you for
-    a while. What kind of mices are hunting this guys? Huh.
+    of them. Placed in random places to catch mice they also incapacitate you for
+    a while. What kind of mice are hunting these guys? Huh.
 
 
     A Bag of Trash
 
     Your
-    hands with opinion on their own randomly throw bags of trash if you catch them
-    in the air you get 3 points, but if you miss it and it falls on the floor you
-    get punished with -2 points to your total result.
+    hands with opinion on their own randomly throw bags of trash. If you catch them
+    in the air you won''t get to clean afterwards, but if you miss it and it falls
+    on the floor you get to clean all the mess.
 
 
     A Pot With Flower
 
     From
-    time to time your inner beast will shoot bulets, be careful not to break the
+    time to time your inner beast will shoot bullets. Be careful not to break the
     pots with the flowers I have heard that your boss is emotionaly connected to
-    them and this is why you get -5 points punishment.'
+    them.'
 --- !u!222 &1716914776
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1942,8 +1942,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 544426976}
   m_HandleRect: {fileID: 544426975}
   m_Direction: 2
-  m_Value: 1
-  m_Size: 0.17695583
+  m_Value: 0.99999994
+  m_Size: 0.17696717
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:

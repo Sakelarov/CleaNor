@@ -39,7 +39,6 @@ public class StainerController : MonoBehaviour
         ThrowGarbage();
 
         anim.SetInteger("state", (int)state);
-        
     }
 
     private void MakeStains()

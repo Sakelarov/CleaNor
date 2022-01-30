@@ -228,7 +228,7 @@ public class StainSpawner : MonoBehaviour
         else if (level == 5)
         {
             topBorder.transform.position = new Vector3(topBorder.transform.position.x,
-                topBorder.transform.position.y - 2.5f, topBorder.transform.position.z);
+                topBorder.transform.position.y - 0.5f, topBorder.transform.position.z);
             spawnArea = spawnarea3;
         }
         else if (level == 6)
