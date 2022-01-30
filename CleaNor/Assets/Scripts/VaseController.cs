@@ -34,6 +34,7 @@ public class VaseController : MonoBehaviour
             stain.transform.position = transform.position;
             StainSpawner.Instance.AddStainToCollection(stain);
             other.GetComponent<BulletController>().DestructBullet();
+            SoundManager.Instance.Play("vase");
         }
     }
 

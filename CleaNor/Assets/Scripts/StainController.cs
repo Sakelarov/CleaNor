@@ -8,6 +8,7 @@ public class StainController : MonoBehaviour
     private PlayerController player;
     public float alpha = 1;
 
+    private AudioSource sound;
 
     public int point = 1;
 
@@ -16,6 +17,8 @@ public class StainController : MonoBehaviour
     {
         rend = GetComponent<SpriteRenderer>();
         player = GameObject.Find("Player").GetComponent<PlayerController>();
+        sound = SoundManager.Instance.Play("clean");
+        sound.mute = true;
     }
 
     
@@ -63,6 +66,8 @@ public class StainController : MonoBehaviour
         {
             cleaning = GetCleaned();
             StartCoroutine(cleaning);
+            sound = SoundManager.Instance.Play("clean");
+            sound.mute = false;
         }
     }
 
@@ -71,6 +76,7 @@ public class StainController : MonoBehaviour
         if (other.CompareTag("cleaner"))
         {
             StopCoroutine(cleaning);
+            sound.mute = true;
         }
     }
 

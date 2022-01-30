@@ -79,7 +79,8 @@ public class GarbageController : MonoBehaviour
             {
                 GameObject.Find("UIManagerGO").GetComponent<UIManager>().score -= 2;
             }
-            //Instantiate(stain).transform.position = landingArea;
+
+            SoundManager.Instance.Play("garbage");
             var stainObj = Instantiate(stain);
             stainObj.transform.position = landingArea;
             StainSpawner.Instance.AddStainToCollection(stainObj);

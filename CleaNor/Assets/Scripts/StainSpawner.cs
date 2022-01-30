@@ -164,14 +164,14 @@ public class StainSpawner : MonoBehaviour
             }
 
             progressBar.value = progress;
-            float value = progress * 100 / 20;
+            float value = progress * 100 / 14;
             progressValue.text = $"{value:f1}%";
 
             if (progress <= 0.1f)
             {
                 CompleteLevel();
             }
-            else if (progress >= 20)
+            else if (progress >= 14)
             {
                 GameOver();
             }
@@ -183,6 +183,7 @@ public class StainSpawner : MonoBehaviour
     {
         if (!isCompleted)
         {
+            SoundManager.Instance.Play("win");
             progressValue.text = "0%";
             levelCompletedText.SetActive(true);
             isGameRunning = false;
@@ -227,7 +228,7 @@ public class StainSpawner : MonoBehaviour
         else if (level == 5)
         {
             topBorder.transform.position = new Vector3(topBorder.transform.position.x,
-                topBorder.transform.position.y + 2, topBorder.transform.position.z);
+                topBorder.transform.position.y - 2.5f, topBorder.transform.position.z);
             spawnArea = spawnarea3;
         }
         else if (level == 6)
@@ -257,6 +258,7 @@ public class StainSpawner : MonoBehaviour
     {
         gameoverText.SetActive(true);
         isGameRunning = false;
+        SoundManager.Instance.Play("lsoe");
         Invoke("PauseMenu", 2);
     }
 

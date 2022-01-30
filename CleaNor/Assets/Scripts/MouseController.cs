@@ -9,13 +9,19 @@ public class MouseController : MonoBehaviour
     private float speed = 5f;
     private bool canMove = true;
     private bool rotationStarted = false;
+    private AudioSource sound;
 
     private Vector3 deathMovement;
     void Start()
     {
         anim = GetComponent<Animator>();
+        sound = SoundManager.Instance.Play("mice");
     }
 
+    void OnDestroy()
+    {
+        sound.Pause();
+    }
     
     void Update()
     {
@@ -54,6 +60,8 @@ public class MouseController : MonoBehaviour
             other.transform.SetParent(this.transform);
             other.GetComponent<CircleCollider2D>().enabled = false;
             anim.SetBool("isDead", true);
+            sound.Pause();
+            SoundManager.Instance.Play("trap");
         }
     }
 

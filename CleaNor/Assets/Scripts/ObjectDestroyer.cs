@@ -18,11 +18,19 @@ public class ObjectDestroyer : MonoBehaviour
         {
             StainSpawner.Instance.currentTraps.Remove(other.gameObject);
         }
+        else if (other.CompareTag("dontDestroy"))
+        {
+            return;
+        }
         Destroy(other.gameObject);
     }
 
     private void OnCollisionEnter2D(Collision2D other)
     {
+        if (other.gameObject.CompareTag("dontDestroy"))
+        {
+            return;
+        }
         Destroy(other.gameObject);
     }
 
@@ -39,6 +47,10 @@ public class ObjectDestroyer : MonoBehaviour
         else if (other.CompareTag("trap"))
         {
             StainSpawner.Instance.currentTraps.Remove(other.gameObject);
+        }
+        else if (other.CompareTag("dontDestroy"))
+        {
+            return;
         }
         Destroy(other.gameObject);
     }

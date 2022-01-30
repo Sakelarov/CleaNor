@@ -85,9 +85,11 @@ public class PlayerController : MonoBehaviour
                 Destroy(other.gameObject);
                 break;
             case "bucket": StartCoroutine("IncreaseCleaningSpeed");
+                SoundManager.Instance.Play("bucket");
                 other.gameObject.GetComponent<BucketController>().ResetBucket();
                 break;
             case "trap": trap = other.gameObject;
+                SoundManager.Instance.Play("trap");
                 StartCoroutine("Trap");
                 break;
             case "levelTrigger": StartCoroutine("ProceedToNextLevel");
@@ -127,14 +129,14 @@ public class PlayerController : MonoBehaviour
         speed = 0;
         for (int i = 0; i < 20; i++)
         {
-            if (trap.GetComponent<TrapController>().currentMouse != null)
+            if (trap!=null && trap.GetComponent<TrapController>().currentMouse != null)
             {
                 Destroy(trap.GetComponent<TrapController>().currentMouse);
             }
             yield return new WaitForSeconds(0.2f);
             rend.color = rend.color == Color.white ? new Color(1, 0.6f, 0.6f, 1) : Color.white;
         }
-        if (trap.GetComponent<TrapController>().currentMouse != null)
+        if (trap != null && trap.GetComponent<TrapController>().currentMouse != null)
         {
             Destroy(trap.GetComponent<TrapController>().currentMouse);
         }
