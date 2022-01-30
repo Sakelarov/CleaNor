@@ -17,6 +17,7 @@ public class PlayerController : MonoBehaviour
     private Transform camera;
 
     [SerializeField] private GameObject[] objectsToBeMoved;
+    [SerializeField] private SpriteRenderer broom;
 
     [HideInInspector] public enum State { idle, walk };
     [HideInInspector] public State state = State.idle;
@@ -86,8 +87,8 @@ public class PlayerController : MonoBehaviour
             case "bucket": StartCoroutine("IncreaseCleaningSpeed");
                 other.gameObject.GetComponent<BucketController>().ResetBucket();
                 break;
-            case "trap": StartCoroutine("Trap");
-                trap = other.gameObject;
+            case "trap": trap = other.gameObject;
+                StartCoroutine("Trap");
                 break;
             case "levelTrigger": StartCoroutine("ProceedToNextLevel");
                 canMove = false;
@@ -126,8 +127,16 @@ public class PlayerController : MonoBehaviour
         speed = 0;
         for (int i = 0; i < 20; i++)
         {
+            if (trap.GetComponent<TrapController>().currentMouse != null)
+            {
+                Destroy(trap.GetComponent<TrapController>().currentMouse);
+            }
             yield return new WaitForSeconds(0.2f);
             rend.color = rend.color == Color.white ? new Color(1, 0.6f, 0.6f, 1) : Color.white;
+        }
+        if (trap.GetComponent<TrapController>().currentMouse != null)
+        {
+            Destroy(trap.GetComponent<TrapController>().currentMouse);
         }
         rend.color = Color.white;
         speed = 5;
@@ -139,7 +148,13 @@ public class PlayerController : MonoBehaviour
     private IEnumerator IncreaseCleaningSpeed()
     {
         cleaningSpeed = 2;
-        yield return new WaitForSeconds(8);
+        for (int i = 0; i < 80; i++)
+        {
+            yield return new WaitForSeconds(0.1f);
+            broom.color = broom.color == Color.white ? new Color(0f, 1f, 1f, 1) : Color.white;
+        }
+
+        broom.color = Color.white;
         cleaningSpeed = 1;
     }
 

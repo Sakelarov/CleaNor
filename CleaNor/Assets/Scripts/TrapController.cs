@@ -5,14 +5,19 @@ using UnityEngine;
 public class TrapController : MonoBehaviour
 {
     [SerializeField] private GameObject mouse;
+    private Vector3 spawnPos;
+
+    public GameObject currentMouse = null;
     void Start()
     {
-        Invoke("SpawnMouse", 3);
+        spawnPos = GameObject.Find("MouseSpawnPosition").transform.position;
+        Invoke("SpawnMouse", 5);
     }
 
     private void SpawnMouse()
     {
-        var m = Instantiate(mouse);
-        m.GetComponent<MouseController>().trap = this.gameObject;
+        currentMouse = Instantiate(mouse);
+        currentMouse.transform.position = spawnPos;
+        currentMouse.GetComponent<MouseController>().trap = this.gameObject;
     }
 }

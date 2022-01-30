@@ -75,14 +75,14 @@ public class StainSpawner : MonoBehaviour
 
     private IEnumerator SpawnStains()
     {
-        for (int i = 0; i < level + 2; i++)
+        for (int i = 0; i < level + 4; i++)
         {
             int randomStain = Random.Range(0, stains.Length);
             var stain = Instantiate(stains[randomStain], this.transform);
             stain.transform.position = GetPosition();
             stainCollection.Add(stain.GetComponent<SpriteRenderer>());
         }
-        for (int i = 0; i < 10 + level; i++)
+        for (int i = 0; i < 10 + level * 3; i++)
         {
             float seconds = Random.Range(8, 13);
             yield return new WaitForSeconds(seconds);

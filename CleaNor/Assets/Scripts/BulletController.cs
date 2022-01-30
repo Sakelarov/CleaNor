@@ -5,10 +5,16 @@ using UnityEngine;
 
 public class BulletController : MonoBehaviour
 {
+    private Animator anim;
     private Vector3 direction;
     private float speed = 6;
     private bool isSet = false;
 
+
+    void Start()
+    {
+        anim = GetComponent<Animator>();
+    }
     void Update()
     {
         if(isSet) transform.Translate(direction * speed * Time.deltaTime);
@@ -31,6 +37,17 @@ public class BulletController : MonoBehaviour
                 break;
         }
         isSet = true;
+    }
+
+    public void DestructBullet()
+    {
+        anim.SetBool("hasCollided", true);
+        isSet = false;
+    }
+
+    public void DestroyBullet()
+    {
+        Destroy(this.gameObject);
     }
     
 }

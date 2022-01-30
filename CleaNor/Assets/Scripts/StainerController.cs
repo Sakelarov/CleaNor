@@ -14,6 +14,7 @@ public class StainerController : MonoBehaviour
     [SerializeField] private Image bulletLoader;
     [SerializeField] private float loadSpeed;
     [SerializeField] private GameObject garbage;
+    [SerializeField] private GameObject bottomBorder;
     private bool isGarbageThrown = false;
 
     private float fillAmount = 0;
@@ -33,16 +34,18 @@ public class StainerController : MonoBehaviour
 
     void Update()
     {
-        //MakeStains();
+        MakeStains();
         ShootBullets();
         ThrowGarbage();
 
         anim.SetInteger("state", (int)state);
+        
     }
 
     private void MakeStains()
     {
-        if (Input.GetAxis("Horizontal") == 0 && Input.GetAxis("Vertical") == 0 && StainSpawner.Instance.isGameRunning)
+        if (Input.GetAxis("Horizontal") == 0 && Input.GetAxis("Vertical") == 0 && StainSpawner.Instance.isGameRunning 
+            && transform.position.y - bottomBorder.transform.position.y > 5.5f)
         {
             if (!isOnSamePosition)
             {

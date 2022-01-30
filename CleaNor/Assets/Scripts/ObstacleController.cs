@@ -8,7 +8,7 @@ public class ObstacleController : MonoBehaviour
     {
         if (other.CompareTag("bullet"))
         {
-            Destroy(other.gameObject);
+            other.GetComponent<BulletController>().DestructBullet();
         }
     }
 }
