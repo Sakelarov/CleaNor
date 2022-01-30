@@ -33,7 +33,7 @@ public class StainerController : MonoBehaviour
 
     void Update()
     {
-        MakeStains();
+        //MakeStains();
         ShootBullets();
         ThrowGarbage();
 

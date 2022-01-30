@@ -30,6 +30,7 @@ public class StainSpawner : MonoBehaviour
 
     [SerializeField] private GameObject topBorder;
     [SerializeField] private GameObject bottomBorder;
+    [SerializeField] private GameObject midDestroyer;
     [SerializeField] private RectTransform spawnarea2;
     [SerializeField] private RectTransform spawnarea3;
     [SerializeField] private GameObject arrow;
@@ -187,6 +188,7 @@ public class StainSpawner : MonoBehaviour
             isGameRunning = false;
             arrow.SetActive(true);
             topBorder.SetActive(false);
+            midDestroyer.SetActive(false);
             levelChangeTrigger.SetActive(true);
             foreach (var garbageController in GameObject.FindObjectsOfType<GarbageController>())
             {
@@ -213,6 +215,7 @@ public class StainSpawner : MonoBehaviour
         topBorder.SetActive(true);
         levelCompletedText.SetActive(false);
         arrow.SetActive(false);
+        midDestroyer.SetActive(true);
         level++;
 
         if (level == 2)
