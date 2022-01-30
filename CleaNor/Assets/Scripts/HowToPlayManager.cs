@@ -27,6 +27,7 @@ public class HowToPlayManager : MonoBehaviour
 
     public void GoToMain()
     {
+        SoundManager.Instance.VolumeZero("music");
         SceneManager.LoadScene("MainMenu");
     }
 

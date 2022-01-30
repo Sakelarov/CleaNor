@@ -55,6 +55,7 @@ public class MusicManager : MonoBehaviour
     {
         StartCoroutine(PlayMusicRoutine());
         DontDestroyOnLoad(this.gameObject);
+
     }
 
     // Update is called once per frame

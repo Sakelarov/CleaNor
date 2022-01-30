@@ -36,6 +36,17 @@ public class SoundManager : MonoBehaviour
         }
     }
 
+    void Start()
+    {
+        var soundManagers = GameObject.FindGameObjectsWithTag("soundManager");
+        if (soundManagers.Length > 1)
+        {
+            Destroy(soundManagers[0]);
+        }
+        DontDestroyOnLoad(this.gameObject);
+        Play("music");
+    }
+
     public AudioSource Play(string name)
     {
         Sound s = Array.Find(sounds, sound => sound.name == name);

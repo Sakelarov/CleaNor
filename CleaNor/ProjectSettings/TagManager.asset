@@ -17,6 +17,7 @@ TagManager:
   - levelTrigger
   - stain
   - dontDestroy
+  - soundManager
   layers:
   - Default
   - TransparentFX
